@@ -162,9 +162,9 @@ function Container() {
         {/* <form action="https://github.com/login/oauth/authorize" method="get">
           <input type="submit">Login with GitHub</input>
         </form> */}
-        <Form>
+        {/* <Form>
           <Button type="submit">Login with GitHub</Button>
-        </Form>
+        </Form> */}
       </div>
     </div>
   );
