@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/github-languages/static/css/main.90d1f867.chunk.css",
+    "main.js": "/github-languages/static/js/main.0d2d2ba9.chunk.js",
+    "main.js.map": "/github-languages/static/js/main.0d2d2ba9.chunk.js.map",
+    "runtime-main.js": "/github-languages/static/js/runtime-main.6b1598ee.js",
+    "runtime-main.js.map": "/github-languages/static/js/runtime-main.6b1598ee.js.map",
+    "static/css/2.c490997a.chunk.css": "/github-languages/static/css/2.c490997a.chunk.css",
+    "static/js/2.e198a364.chunk.js": "/github-languages/static/js/2.e198a364.chunk.js",
+    "static/js/2.e198a364.chunk.js.map": "/github-languages/static/js/2.e198a364.chunk.js.map",
+    "static/js/3.ec2f546f.chunk.js": "/github-languages/static/js/3.ec2f546f.chunk.js",
+    "static/js/3.ec2f546f.chunk.js.map": "/github-languages/static/js/3.ec2f546f.chunk.js.map",
+    "index.html": "/github-languages/index.html",
+    "static/css/2.c490997a.chunk.css.map": "/github-languages/static/css/2.c490997a.chunk.css.map",
+    "static/css/main.90d1f867.chunk.css.map": "/github-languages/static/css/main.90d1f867.chunk.css.map",
+    "static/js/2.e198a364.chunk.js.LICENSE.txt": "/github-languages/static/js/2.e198a364.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6b1598ee.js",
+    "static/css/2.c490997a.chunk.css",
+    "static/js/2.e198a364.chunk.js",
+    "static/css/main.90d1f867.chunk.css",
+    "static/js/main.0d2d2ba9.chunk.js"
+  ]
+}
