@@ -28,32 +28,32 @@ const formatTimestamp = (timeStamp) => {
 };
 
 function Container() {
-  //   let testData = {
-  //     labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-  //     datasets: [
-  //       {
-  //         label: "# of Votes",
-  //         data: [12, 19, 3, 5, 2, 3],
-  //         backgroundColor: [
-  //           "rgba(245, 122, 151, 0.2)",
-  //           "rgba(110, 148, 245, 0.2)",
-  //           "rgba(245, 173, 135, 0.2)",
-  //           "rgba(135, 245, 151, 0.2)",
-  //           "rgba(153, 102, 255, 0.2)",
-  //           "rgba(245, 217, 147, 0.2)",
-  //         ],
-  //         borderColor: [
-  //           "rgba(245, 122, 151, 1)",
-  //           "rgba(110, 148, 245, 1)",
-  //           "rgba(245, 173, 135, 1)",
-  //           "rgba(135, 245, 151, 1)",
-  //           "rgba(153, 102, 255, 1)",
-  //           "rgba(245, 217, 147, 1)",
-  //         ],
-  //         borderWidth: 1,
-  //       },
-  //     ],
-  //   };
+  let testData = {
+    labels: ["JavaScript", "Python", "Java", "Perl", "Vue", "SQL"],
+    datasets: [
+      {
+        label: "# of bytes written in a language",
+        data: [36314, 25975, 58461, 4543, 12345, 8000],
+        backgroundColor: [
+          "rgba(245, 122, 151, 0.2)",
+          "rgba(110, 148, 245, 0.2)",
+          "rgba(245, 173, 135, 0.2)",
+          "rgba(135, 245, 151, 0.2)",
+          "rgba(153, 102, 255, 0.2)",
+          "rgba(245, 217, 147, 0.2)",
+        ],
+        borderColor: [
+          "rgba(245, 122, 151, 1)",
+          "rgba(110, 148, 245, 1)",
+          "rgba(245, 173, 135, 1)",
+          "rgba(135, 245, 151, 1)",
+          "rgba(153, 102, 255, 1)",
+          "rgba(245, 217, 147, 1)",
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
   const checkErrors = (response) => {
     if (!response.ok) {
       const message = `An error has occured: ${response.status}`;
@@ -130,6 +130,12 @@ function Container() {
           "rgba(135, 245, 151, 0.2)",
           "rgba(153, 102, 255, 0.2)",
           "rgba(245, 217, 147, 0.2)",
+          "rgba(280, 90, 151, 0.2)",
+          "rgba(50, 148, 245, 0.2)",
+          "rgba(245, 200, 90, 0.2)",
+          "rgba(90, 230, 151, 0.2)",
+          "rgba(180, 102, 255, 0.2)",
+          "rgba(245, 200, 110, 0.2)",
         ],
         borderColor: [
           "rgba(245, 122, 151, 1)",
@@ -138,12 +144,18 @@ function Container() {
           "rgba(135, 245, 151, 1)",
           "rgba(153, 102, 255, 1)",
           "rgba(245, 217, 147, 1)",
+          "rgba(280, 90, 151, 1)",
+          "rgba(50, 148, 245, 1)",
+          "rgba(245, 200, 90, 1)",
+          "rgba(90, 230, 151, 1)",
+          "rgba(180, 102, 255, 1)",
+          "rgba(245, 200, 110, 1)",
         ],
         borderWidth: 1,
       },
     ],
   };
-  const [state, setState] = useState([]);
+  const [state, setState] = useState(testData);
   const [loading, setLoading] = useState(false);
   const fieldEntryCallback = (entry) => {
     getData(entry)
@@ -158,6 +170,10 @@ function Container() {
         setState(data);
       })
       .catch((error) => error.message);
+  };
+
+  const testCallback = () => {
+    setState(testData);
   };
   return (
     <div>

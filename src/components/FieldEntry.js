@@ -68,15 +68,19 @@ class FieldEntry extends React.Component {
         <Form className="FieldEntry-input" onSubmit={this.handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Row className="align-items-center">
-              <Col xs="auto">
+              <Col>
                 <Form.Label visuallyHidden>GitHub Username</Form.Label>
-                <Form.Control
-                  value={this.state.value}
-                  onChange={this.handleChange}
-                  type="text"
-                  placeholder="Enter username"
-                />
               </Col>
+              <Row>
+                <Col>
+                  <Form.Control
+                    value={this.state.value}
+                    onChange={this.handleChange}
+                    type="text"
+                    placeholder="Enter username"
+                  />
+                </Col>
+              </Row>
             </Row>
             <Row>
               <Col>
