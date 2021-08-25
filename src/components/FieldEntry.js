@@ -1,6 +1,6 @@
 import React from "react";
 import "../App.css";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Button, Row, Col, Spinner } from "react-bootstrap";
 
 class FieldEntry extends React.Component {
   constructor(props) {
@@ -23,6 +23,38 @@ class FieldEntry extends React.Component {
     event.preventDefault();
   }
   render() {
+    const SubmitButton = () => {
+      if (this.props.isLoading === true)
+        return (
+          <Button
+            className="FieldEntry-input"
+            variant="secondary"
+            type="submit"
+            disabled
+          >
+            <div>
+              Loading...
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+            </div>
+          </Button>
+        );
+      else
+        return (
+          <Button
+            className="FieldEntry-input"
+            variant="secondary"
+            type="submit"
+          >
+            Submit
+          </Button>
+        );
+    };
     return (
       <div>
         <header className="App-header">
@@ -44,13 +76,11 @@ class FieldEntry extends React.Component {
                   type="text"
                   placeholder="Enter username"
                 />
-                <Button
-                  className="FieldEntry-input"
-                  variant="secondary"
-                  type="submit"
-                >
-                  Submit
-                </Button>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <SubmitButton />
               </Col>
             </Row>
           </Form.Group>

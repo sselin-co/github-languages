@@ -27,64 +27,6 @@ const formatTimestamp = (timeStamp) => {
   return tConvert(hours + ":" + minutes.substr(-2) + ":" + seconds.substr(-2));
 };
 
-const checkErrors = (response) => {
-  if (!response.ok) {
-    const message = `An error has occured: ${response.status}`;
-    throw new Error(message);
-  }
-};
-
-const getData = async (username) => {
-  const ratesResponse = await fetch("https://api.github.com/rate_limit", {
-    Accept: "application/vnd.github.v3+json",
-  });
-  checkErrors(ratesResponse);
-  const rates = await ratesResponse.json();
-  console.log(
-    `Data rate remaining: ${rates.rate.remaining} \n`,
-    `Rate will reset at: ${formatTimestamp(rates.rate.reset)}`
-  );
-  if (rates.rate.remaining === 0)
-    return alert(
-      `GitHub API rate limit exceeded. Please wait till ${formatTimestamp(
-        rates.rate.reset
-      )} to try again, or login with your GitHub account to increase your rate limit.`
-    );
-  const repoResponse = await fetch(
-    `https://api.github.com/users/${username}/repos`,
-    {
-      Accept: "application/vnd.github.v3+json",
-    }
-  );
-  checkErrors(repoResponse);
-  const repos = await repoResponse.json();
-  if (repos.length === 0)
-    return alert(
-      "No repositories with detectable languages were found for this username."
-    );
-  let repoList = [];
-  for (let repo of repos) {
-    let langUrl = repo.languages_url;
-    let response = await fetch(langUrl, {
-      Accept: "application/vnd.github.v3+json",
-    });
-    checkErrors(response);
-    response = await response.json();
-    repoList.push(response);
-  }
-  let dataList = {};
-  for (let repo of repoList) {
-    if (repo.length > 0) continue;
-    else
-      for (const [key, value] of Object.entries(repo)) {
-        if (dataList[key] !== undefined) {
-          dataList[key] = dataList[key] + value;
-        } else dataList[key] = value;
-      }
-  }
-  return dataList;
-};
-
 function Container() {
   //   let testData = {
   //     labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
@@ -112,6 +54,69 @@ function Container() {
   //       },
   //     ],
   //   };
+  const checkErrors = (response) => {
+    if (!response.ok) {
+      const message = `An error has occured: ${response.status}`;
+      setLoading(false);
+      throw new Error(message);
+    }
+  };
+  const getData = async (username) => {
+    setLoading(true);
+    const ratesResponse = await fetch("https://api.github.com/rate_limit", {
+      Accept: "application/vnd.github.v3+json",
+    });
+    checkErrors(ratesResponse);
+    const rates = await ratesResponse.json();
+    console.log(
+      `Data rate remaining: ${rates.rate.remaining} \n`,
+      `Rate will reset at: ${formatTimestamp(rates.rate.reset)}`
+    );
+    if (rates.rate.remaining === 0) {
+      setLoading(false);
+      return alert(
+        `GitHub API rate limit exceeded. Please wait till ${formatTimestamp(
+          rates.rate.reset
+        )} to try again, or login with your GitHub account to increase your rate limit.`
+      );
+    }
+    const repoResponse = await fetch(
+      `https://api.github.com/users/${username}/repos`,
+      {
+        Accept: "application/vnd.github.v3+json",
+      }
+    );
+    checkErrors(repoResponse);
+    const repos = await repoResponse.json();
+    if (repos.length === 0) {
+      setLoading(false);
+      return alert(
+        "No repositories with detectable languages were found for this username."
+      );
+    }
+    let repoList = [];
+    for (let repo of repos) {
+      let langUrl = repo.languages_url;
+      let response = await fetch(langUrl, {
+        Accept: "application/vnd.github.v3+json",
+      });
+      checkErrors(response);
+      response = await response.json();
+      repoList.push(response);
+    }
+    let dataList = {};
+    for (let repo of repoList) {
+      if (repo.length > 0) continue;
+      else
+        for (const [key, value] of Object.entries(repo)) {
+          if (dataList[key] !== undefined) {
+            dataList[key] = dataList[key] + value;
+          } else dataList[key] = value;
+        }
+    }
+    setLoading(false);
+    return dataList;
+  };
   let data = {
     labels: [],
     datasets: [
@@ -139,7 +144,7 @@ function Container() {
     ],
   };
   const [state, setState] = useState([]);
-  //   let [entry, setEntry] = useState("");
+  const [loading, setLoading] = useState(false);
   const fieldEntryCallback = (entry) => {
     getData(entry)
       .then((results) => {
@@ -158,7 +163,7 @@ function Container() {
     <div>
       <div className="App-body">
         <Graph data={state} />
-        <FieldEntry passToContainer={fieldEntryCallback} />
+        <FieldEntry isLoading={loading} passToContainer={fieldEntryCallback} />
         {/* <form action="https://github.com/login/oauth/authorize" method="get">
           <input type="submit">Login with GitHub</input>
         </form> */}
