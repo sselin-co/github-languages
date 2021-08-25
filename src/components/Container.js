@@ -3,6 +3,7 @@ import Graph from "./Graph";
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
+// Converts UNIX Epoch time to 12hr time. Useful for displaying API reset timestamps.
 const formatTimestamp = (timeStamp) => {
   let date = new Date(timeStamp * 1000);
   let hours = date.getHours();
@@ -27,33 +28,13 @@ const formatTimestamp = (timeStamp) => {
   return tConvert(hours + ":" + minutes.substr(-2) + ":" + seconds.substr(-2));
 };
 
+// Parent component for the user input field and graph. Mediates data transfer between siblings.
 function Container() {
-  let testData = {
-    labels: ["JavaScript", "Python", "Java", "Perl", "Vue", "SQL"],
-    datasets: [
-      {
-        label: "# of bytes written in a language",
-        data: [36314, 25975, 58461, 4543, 12345, 8000],
-        backgroundColor: [
-          "rgba(245, 122, 151, 0.2)",
-          "rgba(110, 148, 245, 0.2)",
-          "rgba(245, 173, 135, 0.2)",
-          "rgba(135, 245, 151, 0.2)",
-          "rgba(153, 102, 255, 0.2)",
-          "rgba(245, 217, 147, 0.2)",
-        ],
-        borderColor: [
-          "rgba(245, 122, 151, 1)",
-          "rgba(110, 148, 245, 1)",
-          "rgba(245, 173, 135, 1)",
-          "rgba(135, 245, 151, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(245, 217, 147, 1)",
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
+  // State hook storing the state of the graph.
+  const [state, setState] = useState(placeHolder);
+  // State hook controlling if loading indicator is displayed.
+  const [loading, setLoading] = useState(false);
+  // Consumes API response and throws an error if a bad status code is received.
   const checkErrors = (response) => {
     if (!response.ok) {
       const message = `An error has occured: ${response.status}`;
@@ -61,6 +42,7 @@ function Container() {
       throw new Error(message);
     }
   };
+  // Takes in a username as input and returns an object with the languages 
   const getData = async (username) => {
     setLoading(true);
     const ratesResponse = await fetch("https://api.github.com/rate_limit", {
@@ -117,11 +99,38 @@ function Container() {
     setLoading(false);
     return dataList;
   };
+  //
+  let placeHolder = {
+    labels: ["JavaScript", "Python", "Java", "Perl", "Vue", "SQL"],
+    datasets: [
+      {
+        label: "# of bytes written in a language",
+        data: [36314, 25975, 58461, 4543, 12345, 8000],
+        backgroundColor: [
+          "rgba(245, 122, 151, 0.2)",
+          "rgba(110, 148, 245, 0.2)",
+          "rgba(245, 173, 135, 0.2)",
+          "rgba(135, 245, 151, 0.2)",
+          "rgba(153, 102, 255, 0.2)",
+          "rgba(245, 217, 147, 0.2)",
+        ],
+        borderColor: [
+          "rgba(245, 122, 151, 1)",
+          "rgba(110, 148, 245, 1)",
+          "rgba(245, 173, 135, 1)",
+          "rgba(135, 245, 151, 1)",
+          "rgba(153, 102, 255, 1)",
+          "rgba(245, 217, 147, 1)",
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
   let data = {
     labels: [],
     datasets: [
       {
-        label: "",
+        label: "# of bytes written in a language",
         data: [],
         backgroundColor: [
           "rgba(245, 122, 151, 0.2)",
@@ -155,8 +164,7 @@ function Container() {
       },
     ],
   };
-  const [state, setState] = useState(testData);
-  const [loading, setLoading] = useState(false);
+
   const fieldEntryCallback = (entry) => {
     getData(entry)
       .then((results) => {
@@ -173,7 +181,7 @@ function Container() {
   };
 
   const testCallback = () => {
-    setState(testData);
+    setState(placeHolder);
   };
   return (
     <div>

@@ -6,6 +6,7 @@ Use this website to visualize all languages across a GitHub account's repositori
 
 ## To-do
 
+- Fix odd behavior of graph re-rendering on username submission.
 - Graph needs to scale vertically for mobile.
 - Options to change graph type (circle, radar, etc.).
 - Implement OAuth flow for GitHub login to increase API limit from 60 to 5k calls.
