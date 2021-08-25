@@ -29,7 +29,7 @@ html {
 
 .App-body {
   font-size: calc(10px + 2vmin);
-  /* max-height: 70vh; */
+  max-width: 25em;
 }
 
 .App-link {
@@ -44,8 +44,8 @@ html {
 }
 
 .Graph-container {
-  width: 40rem;
-  height: 40rem;
-  margin: 0 auto;
+  /* width: 25vw; */
+  /* height: 50vh; */
+  /* margin: 0 auto; */
   padding: 2rem;
 }
